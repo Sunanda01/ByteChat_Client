@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Chat from "./components/Chat";
 import { useSelector } from "react-redux";
+import Home from "./pages/Home";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -16,7 +17,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={user ? <Chat /> : <Navigate to="/login" />}
+              element={user ? <Home /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"
