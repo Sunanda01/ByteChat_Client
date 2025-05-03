@@ -30,7 +30,7 @@ export default function Login() {
     const res = await login(formData);
     if (res?.data?.success) {
       toast.success(res?.data?.msg);
-      navigate('/chat');
+      navigate("/chat");
       setFormData(initialData);
     } else {
       toast.error(error.data.msg);
@@ -113,7 +113,11 @@ export default function Login() {
               </div>
             </CardContent>
             <CardFooter className="flex justify-center flex-col gap-2">
-              <Button type="submit" className="mt-4">
+              <Button
+                type="submit"
+                className="mt-4 cursor-pointer"
+                disabled={isLoading}
+              >
                 {isLoading ? <PulseLoader color="#ffffff" size={5} /> : "Login"}
               </Button>
               <div className="inline-flex justify-center gap-2 text-white">

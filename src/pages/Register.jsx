@@ -63,8 +63,8 @@ export default function Register() {
                   Create New Account
                 </div>
               </CardTitle>
-              <CardDescription className="font-semibold text-white text-center">
-                Fill the below form
+              <CardDescription className="font-semibold text-gray-600 text-center">
+                Fill the details
               </CardDescription>
             </CardHeader>
 
@@ -129,7 +129,11 @@ export default function Register() {
                 </div>
               </CardContent>
               <CardFooter className="flex justify-center flex-col gap-2">
-                <Button type="submit" className="mt-4">
+                <Button
+                  type="submit"
+                  className="mt-4 cursor-pointer"
+                  disabled={isLoading}
+                >
                   {isLoading ? (
                     <PulseLoader color="#ffffff" size={5} />
                   ) : (
