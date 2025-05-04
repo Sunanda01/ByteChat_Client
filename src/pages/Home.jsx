@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 
 export default function Home() {
-  const user = useSelector((state) => state.user);
+  const {user} = useSelector((state) => state.user);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center  text-gray-800  w-full">
       {/* Greeting */}

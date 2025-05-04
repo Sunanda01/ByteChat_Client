@@ -8,12 +8,12 @@ import { PulseLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-  const user = useSelector((state) => state.user);
+  const {user} = useSelector((state) => state.user);
   const [logout, { isLoading, error }] = useLogoutMutation();
   const handleLogout = async () => {
-    const res = await logout();
+    const res = await logout(user?.user);
     if (res?.data?.success) {
-      console.log(res?.data);
+      console.log(res);
       toast.success(res?.data?.msg);
       window.location.href = "/login";
     } else {

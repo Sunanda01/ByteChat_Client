@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "./Sidebar";
+import MessageRoom from "./MessageRoom";
 
 export default function Chat() {
   return (
@@ -8,9 +9,9 @@ export default function Chat() {
       <Sidebar />
 
       {/* — Main area (right) */}
-      <main className="flex-1 bg-white p-6 overflow-y-auto ">
+      <main className="flex-1 bg-white overflow-hidden h-full mr-5">
         {/* Your single component here */}
-        Main Chat Window
+        <MessageRoom/>
       </main>
     </div>
   );
