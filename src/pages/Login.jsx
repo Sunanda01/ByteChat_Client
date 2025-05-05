@@ -33,33 +33,20 @@ export default function Login() {
       navigate("/chat");
       setFormData(initialData);
     } else {
-      toast.error(error.data.msg);
-      console.error("Login failed");
+      toast.error(error?.data?.msg);
     }
-    console.log(formData);
   };
   return (
-    <div className="grid grid-cols-2 w-full h-[calc(100vh-4rem)] mt-16">
-      <div className="h-full flex justify-center items-center overflow-hidden border-r border-gray-300">
+    <div className="grid grid-cols-1 lg:grid-cols-2 w-full h-[calc(100vh-4rem)] mt-16">
+      <div className="h-full lg:block hidden justify-center items-center overflow-hidden border-r border-gray-300">
         <img src="/bg2.jpg" className="w-auto object-contain h-full " />
       </div>
-      <div className="flex items-center justify-center flex-col gap-5">
-        <div className="flex items-center justify-center flex-row gap-4">
-          <img
-            src="/ByteChat.svg"
-            alt=""
-            className="h-14 w-14 rounded-full shadow"
-          />
-          <h1 className="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-600">
-            Connect With ByteChat
-          </h1>
-        </div>
-        <Card className="w-[450px] bg-gradient-to-r from-blue-300 to-green-300 ">
+      <div className="flex items-center justify-center flex-col gap-5 ">
+        <Card className="w-[350px] sm:w-[450px] bg-gradient-to-r from-blue-300 to-green-300 ">
           <CardHeader>
             <CardTitle className="font-bold text-xl text-center">
               <div className="flex gap-2 justify-center">
-                <img src="/hey.svg" className="rounded-full h-6 w-6" alt="" />
-                <h1>Welcome Back</h1>
+                <h1>👋 Welcome Back</h1>
               </div>
             </CardTitle>
             <CardDescription className="font-semibold text-white text-center"></CardDescription>

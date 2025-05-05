@@ -18,9 +18,6 @@ function Sidebar() {
   } = useContext(AppContext);
   const dispatch = useDispatch();
   const { user, newMessages } = useSelector((state) => state.user);
-  // console.log(user?.user)
-  console.log(privateMemberMsg);
-  console.log(currentRoom);
   const getRoom = async () => {
     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/room`);
     setRooms(res?.data);
@@ -46,7 +43,6 @@ function Sidebar() {
 
   useEffect(() => {
     if (!socket) return;
-
     socket.off("notifications").on("notifications", (room) => {
       dispatch(addNotifications(room));
     });
@@ -57,7 +53,6 @@ function Sidebar() {
 
   socket.off("newUser").on("newUser", (payload) => {
     setMembers(payload);
-    console.log(payload);
   });
 
   function orderIds(id1, id2) {
@@ -71,26 +66,26 @@ function Sidebar() {
     joinRoom(roomId, false);
   }
   return (
-    <aside className="w-96 bg-gray-100 p-4 flex flex-col gap-4 overflow-y-auto shadow-lg">
-      {/* You said two components stacked vertically */}
-      <div className="bg-white rounded-lg p-4 shadow">
-        {/* Component One */}
-        <div className="flex items-center gap-2 ">
-          <h1 className="text-2xl font-bold ">Available Rooms </h1>
+    <aside className="w-96 bg-gray-100 p-4  flex-col gap-4 overflow-y-auto shadow-lg  hidden  md:flex">
+      <div className="bg-white rounded-lg p-4 shadow bg-gradient-to-r from-red-300 to-yellow-400">
+        <div className="flex items-center gap-3 ">
           <House className="h-6 w-6 text-gray-600" />
+          <h1 className="text-2xl font-bold ">Available Rooms </h1>
         </div>
         <div className="flex flex-col gap-0.5 mt-2">
           {rooms.map((room, id) => (
             <div
               key={id}
               className={`${
-                room === currentRoom ? "bg-blue-600 text-white font-bold" : ""
-              } cursor-pointer border-2 p-1 tracking-wider font-serif flex justify-between capitalize h-10 items-center`}
+                room === currentRoom
+                  ? "bg-blue-600 text-white font-bold"
+                  : "bg-white"
+              } cursor-pointer border-1 pl-4 tracking-wider font-serif flex justify-between capitalize h-10 items-center rounded-md`}
               onClick={() => joinRoom(room)}
             >
               {room}
               {currentRoom !== room && newMessages && newMessages[room] && (
-                <span className="rounded-full bg-green-500 h-7 w-7  text-center text-white ">
+                <span className="rounded-full bg-green-500 h-7 w-7  text-center text-white mr-4">
                   {newMessages[room]}
                 </span>
               )}
@@ -99,11 +94,10 @@ function Sidebar() {
         </div>
       </div>
 
-      <div className="flex-1 bg-white rounded-lg p-4 shadow ">
-        {/* Component Two */}
-        <div className="flex items-center gap-2 ">
-          <h1 className="text-2xl font-bold ">Members</h1>
+      <div className="flex-1 bg-white rounded-lg p-4 shadow bg-gradient-to-r from-emerald-300 to-lime-300">
+        <div className="flex items-center gap-3 ">
           <Users className="h-6 w-6 text-gray-600" />
+          <h1 className="text-2xl font-bold ">Members</h1>
         </div>
         <div className="flex flex-col gap-0.5 mt-2">
           {members.map((member, id) => {
@@ -113,20 +107,26 @@ function Sidebar() {
                 key={id}
                 className={`${
                   privateMemberMsg && member._id === privateMemberMsg._id
-                    ? "bg-pink-100"
-                    : ""
-                } p-1.5 flex border-1 capitalize font-serif items-center gap-3 cursor-pointer`}
-                onClick={() => handlePrivateMember(member)}
-                disabled={member._id === user?.user?.id} //todo
+                    ? "bg-gray-200 "
+                    : "bg-gray-100"
+                } ${
+                  user?.user?.id === member._id
+                    ? "cursor-not-allowed"
+                    : "cursor-pointer"
+                } p-1.5 flex border-1 capitalize font-serif items-center gap-3 rounded-md justify-start`}
+                onClick={() => {
+                  if (user?.user?.id !== member._id)
+                    handlePrivateMember(member);
+                }}
               >
                 <img
-                  src={member.image || "/ByteChat.svg"}
+                  src={member.picture || "/avatar.png"}
                   className="rounded-full h-16 w-16"
                   alt=""
                 />
                 <div className="flex flex-col">
                   <div>
-                    <span className="text-lg line-clamp-1">
+                    <span className="text-lg line-clamp-1 tracking-wide">
                       {member.name}
                       <span className="text-sm ml-1 text-gray-500">
                         {member._id === user?.user?.id ? "(You)" : ""}
@@ -146,7 +146,7 @@ function Sidebar() {
                 {currentRoom !== roomId &&
                   newMessages &&
                   newMessages[roomId] && (
-                    <span className="rounded-full bg-green-500 h-7 w-7  text-center text-white ml-6">
+                    <span className="rounded-full bg-green-500 h-7 w-7  text-center text-white ml-22">
                       {newMessages[roomId]}
                     </span>
                   )}

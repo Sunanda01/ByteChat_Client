@@ -9,7 +9,7 @@ export default function Chat() {
       <Sidebar />
 
       {/* — Main area (right) */}
-      <main className="flex-1 bg-white overflow-hidden h-full mr-5">
+      <main className="flex-1 bg-white overflow-hidden h-full">
         {/* Your single component here */}
         <MessageRoom/>
       </main>
